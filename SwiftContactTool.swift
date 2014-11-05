@@ -164,26 +164,3 @@ func analyzeContactProperty(contact:ABRecordRef, property:ABPropertyID, keySuffi
         return nil
     }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
