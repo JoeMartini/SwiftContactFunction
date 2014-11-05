@@ -4,7 +4,7 @@ SwiftContactFunction
 A way to access system contact with Swift
 
 export example :
-
+/*
 _$!<Home>!$_Phone: 555-610-6679
 FirstName: David
 FirstNamePhonetic: 
@@ -27,3 +27,4 @@ twitter_SNS_Username: aaaaa
 _$!<HomePage>!$_URL: www.net.com
 _$!<Anniversary>!$_Date: 2011-12-05 12:00:00 +0000
 ---------
+*/
