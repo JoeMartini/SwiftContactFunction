@@ -10,7 +10,7 @@
 1. 需要项目引入Address框架
 2. 主函数getSysContacts()返回经过解析的数组，每个联系人的信息为一个字典
 3. 调用方式：let sysContacts:Array = getSysContacts()
-4. 输出（Xcode6.1模拟器通讯录，手动添加Twitter、纪念日、URL）：
+4. 输出（Xcode6.1模拟器通讯录）：
 
 _$!<Home>!$_Phone: 555-610-6679
 FirstName: David
@@ -22,17 +22,14 @@ _$!<Home>!$_Address_State: CA
 _$!<Home>!$_Address_Country: USA
 Note: Plays on Cole's Little League Baseball Team
 
-twitter_SNS_URL: http://twitter.com/aaaaa
 LirstNamePhonetic:
 Organization:
 Nikename:
 _$!<Home>!$_Address_Street: 1747 Steuart Street
+fullAddress: USA, CA, Tiburon, 1747 Steuart Street
 LastName: Taylor
 JobTitle:
-twitter_SNS_Serves: twitter
-twitter_SNS_Username: aaaaa
-_$!<HomePage>!$_URL: www.net.com
-_$!<Anniversary>!$_Date: 2011-12-05 12:00:00 +0000
+fullName: David Taylor
 ---------
 
 */
@@ -79,6 +76,10 @@ func analyzeSysContacts(sysContacts:NSArray) -> [[String:String]] {
         currentContact["LirstNamePhonetic"] = ABRecordCopyValue(contact, kABPersonLastNamePhoneticProperty)?.takeRetainedValue() as String? ?? ""
         // 昵称
         currentContact["Nikename"] = ABRecordCopyValue(contact, kABPersonNicknameProperty)?.takeRetainedValue() as String? ?? ""
+        
+        // 姓名整理
+        currentContact["fullName"] = currentContact["FirstName"]! + " " + currentContact["LastName"]!
+        
         // 公司（组织）
         currentContact["Organization"] = ABRecordCopyValue(contact, kABPersonOrganizationProperty)?.takeRetainedValue() as String? ?? ""
         // 职位
@@ -141,6 +142,9 @@ func analyzeContactProperty(contact:ABRecordRef, property:ABPropertyID, keySuffi
                 valueDictionary[label+"_City"] = addrNSDict.valueForKey(kABPersonAddressCityKey) as? String ?? ""
                 valueDictionary[label+"_Street"] = addrNSDict.valueForKey(kABPersonAddressStreetKey) as? String ?? ""
                 valueDictionary[label+"_Contrycode"] = addrNSDict.valueForKey(kABPersonAddressCountryCodeKey) as? String ?? ""
+                
+                // 地址整理
+                valueDictionary["fullAddress"] = (valueDictionary[label+"_Country"]! == "" ? valueDictionary[label+"_Contrycode"]! : valueDictionary[label+"_Country"]!) + ", " + valueDictionary[label+"_State"]! + ", " + valueDictionary[label+"_City"]! + ", " + valueDictionary[label+"_Street"]!
             // SNS
             case kABPersonSocialProfileProperty :
                 var snsNSDict:NSMutableDictionary = value.takeRetainedValue() as NSMutableDictionary
@@ -164,3 +168,26 @@ func analyzeContactProperty(contact:ABRecordRef, property:ABPropertyID, keySuffi
         return nil
     }
 }
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
